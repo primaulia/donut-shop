@@ -5,7 +5,16 @@ var bodyParser = require('body-parser')
 
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost/donut-shop')
+
+console.log('the environment is on ' + process.env.NODE_ENV)
+
+if (process.env.NODE_ENV === 'production') {
+  // heroku mongoose connection
+  mongoose.connect('mongodb://wdi6:wdi610041991@ds047792.mlab.com:47792/wdi6')
+} else {
+  // localhost mongoose connection
+  mongoose.connect('mongodb://localhost/donut-shop')
+}
 
 app.set('view engine', 'ejs')
 app.use(layout)
