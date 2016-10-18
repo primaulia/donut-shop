@@ -1,0 +1,18 @@
+<h2>list all donuts</h2>
+<form class="new-donut">
+  <div class="row">
+    <div class="six columns">
+      <input type="text" name="donut[flavor]" id="donut-flavor" placeholder="Your donut name" class="u-full-width">
+    </div>
+    <div class="six columns">
+      <input type="text" name="donut[type]" id="donut-type" placeholder="Your donut type" class="u-full-width">
+    </div>
+    <input type="submit" value='Save My Donut'>
+  </div>
+</form>
+
+
+<% allDonuts.forEach(function(donut) { %>
+  <li><%= donut.flavor %></li>
+  <li><%= donut.type %></li>
+<% }) %>
