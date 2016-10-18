@@ -30,5 +30,7 @@ app.use('/api/donuts', ajaxRoutes) // only handle ajax request
 app.use('/users', usersRoutes)
 app.use('/api/users', usersAPIRoutes)
 
-app.listen(3000)
+console.log('the heroku port is ' + process.env.PORT)
+
+app.listen(process.env.PORT || 3000)
 console.log('Server started')
