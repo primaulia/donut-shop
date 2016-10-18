@@ -6,7 +6,6 @@ $(document).ready(function ($) {
     // console.log($(this).serializeArray())
     var formdata = $(this).serializeArray()
 
-
     // console.log(data[0].name)
 
     var user_name = $('#user-name').val()
@@ -24,7 +23,6 @@ $(document).ready(function ($) {
 
   function doSomething (data) {
     alert('form submitted, new users created')
-    alert(data)
-    $('#all-user-list').append('<li>' + data.name + data.email + data.password +'</li>')
+    $('#all-user-list').append('<li>' + data.name + data.email + data.password + '</li>')
   }
 })

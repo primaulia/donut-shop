@@ -1,5 +1,5 @@
 body {
-  background: url('http://deskbg.com/i/c/1920x1200/wpp/2/2633/simpsons-nelson-haha-desktop-background.jpg') repeat-y 0 0;
-  background-size: cover;
+  background: #006599 url('http://deskbg.com/i/c/1920x1200/wpp/2/2633/simpsons-nelson-haha-desktop-background.jpg') no-repeat 100% 100%;
+  background-size: contain;
   color: white;
 }
