@@ -2,19 +2,16 @@ var express = require('express')
 var app = express()
 var layout = require('express-ejs-layouts')
 var bodyParser = require('body-parser')
+var dotenv = require('dotenv')
 
 var mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-console.log('the environment is on ' + process.env.NODE_ENV)
-
-if (process.env.NODE_ENV === 'production') {
-  // heroku mongoose connection
-  mongoose.connect('mongodb://wdi6:wdi610041991@ds047792.mlab.com:47792/wdi6')
-} else {
-  // localhost mongoose connection
-  mongoose.connect('mongodb://localhost/donut-shop')
-}
+/**
+ * Load environment variables from .env file, where API keys and passwords are configured.
+ */
+dotenv.load({ path: '.env.' + process.env.NODE_ENV })
+mongoose.connect(process.env.MONGO_URI)
 
 app.set('view engine', 'ejs')
 app.use(layout)
@@ -38,8 +35,6 @@ app.use('/api/donuts', ajaxRoutes) // only handle ajax request
 
 app.use('/users', usersRoutes)
 app.use('/api/users', usersAPIRoutes)
-
-console.log('the heroku port is ' + process.env.PORT)
 
 app.listen(process.env.PORT || 3000)
 console.log('Server started')
