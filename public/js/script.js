@@ -6,6 +6,7 @@ $(document).ready(function ($) {
     var formdata = $(this).serializeArray()
 
     window.alert('ajax call now')
+
     $.post({
       url: '/api/users',
       data: formdata
@@ -14,6 +15,6 @@ $(document).ready(function ($) {
 
   function doSomething (data) {
     window.alert('form submitted, new users created')
-    $('#all-user-list').append('<li>' + data.name + data.email + data.password + '</li>')
+    $('#all-user-list').append('<li>' + data.local.name + '<br>' + data.local.email + '<br>' + data.local.password + '</li>')
   }
 })

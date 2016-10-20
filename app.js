@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({
 app.use('/donuts', frontendRoutes) // only render ejs files
 app.use('/api/donuts', ajaxRoutes) // only handle ajax request
 
-app.use('/users', usersRoutes)
+app.use('/', usersRoutes)
 app.use('/api/users', usersAPIRoutes)
 
 app.listen(process.env.PORT || 3000)
