@@ -1,0 +1,25 @@
+<h2>Create new user</h2>
+<form class="new-user-passport" action="/signup" method="post">
+  <div class="row">
+    <div class="four columns">
+      <input type="text" name="user[local][name]" id="user-name" placeholder="Your name" class="u-full-width">
+    </div>
+    <div class="four columns">
+      <input type="text" name="user[local][email]" id="user-email" placeholder="Your user email" class="u-full-width">
+    </div>
+    <div class="four columns">
+      <input type="text" name="user[local][password]" id="user-password" placeholder="Your user password" class="u-full-width">
+    </div>
+    <input type="submit" value='Save My User'>
+  </div>
+
+  <ul id="all-user-list">
+  <% allUsers.forEach(function(user) { %>
+    <li>
+        <%= user.local.name %><br>
+        <%= user.local.email %><br>
+        <%= user.local.password %>
+    </li>
+  <% }) %>
+  </ul>
+</form>

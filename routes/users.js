@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var passport = require('passport')
 
 var User = require('../models/user')
 
@@ -9,6 +10,21 @@ router.get('/signup', function (req, res) {
     res.render('users/index', {
       allUsers: allUsers
     })
+  })
+})
+
+router.get('/signup-passport', function (req, res) {
+  User.find({}, function (err, allUsers) {
+    console.log(allUsers)
+    res.render('users/index-passport', {
+      allUsers: allUsers
+    })
+  })
+})
+
+router.post('/signup', function (req, res) {
+  passport.authenticate('local-login', function (err, user, info) {
+
   })
 })
 
