@@ -13,7 +13,7 @@ router.get('/signup', function (req, res) {
 })
 
 router.get('/login', function (req, res) {
-  res.render('users/login')
+  res.render('users/login', { message: req.flash('loginMessage') })
 })
 
 router.post('/login', function (req, res) {
@@ -29,20 +29,22 @@ router.post('/login', function (req, res) {
         if (authenticated) {
           res.redirect('/profile')
         } else {
-          res.redirect('/error')
+          res.redirect('/login')
         }
       })
     } else {
+      // if application cannot find user by email
+      req.flash('loginMessage', 'Email not found!')
       res.redirect('/login')
     }
   })
 })
 
-router.get('/error', function(req, res) {
+router.get('/error', function (req, res) {
   res.render('users/error')
 })
 
-router.get('/profile', function(req, res) {
+router.get('/profile', function (req, res) {
   res.render('users/profile')
 })
 
