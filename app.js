@@ -2,11 +2,13 @@ var express = require('express')
 var app = express()
 var layout = require('express-ejs-layouts')
 var bodyParser = require('body-parser')
+var morgan = require('morgan')
 
 var flash = require('connect-flash')
 var session = require('express-session')
 
 var passport = require('passport')
+var MongoStore = require('connect-mongo')(session)
 
 var dotenv = require('dotenv')
 
@@ -20,12 +22,17 @@ dotenv.load({ path: '.env.' + process.env.NODE_ENV })
 
 mongoose.connect(process.env.MONGO_URI)
 
+app.use(morgan('dev'))
 app.set('view engine', 'ejs')
 app.use(layout)
 app.use(session({
   secret: process.env.EXPRESS_SECRET,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStore({
+    url: process.env.MONGO_URI,
+    autoReconnect: true
+  })
 }))
 
 app.use(passport.initialize())
@@ -47,8 +54,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 })) // to parse form submitted data
 
-
-
+require('./config/passport')(passport)
 
 app.use('/donuts', frontendRoutes) // only render ejs files
 app.use('/api/donuts', ajaxRoutes) // only handle ajax request
