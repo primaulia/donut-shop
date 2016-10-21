@@ -19,7 +19,6 @@ module.exports = function (passport) {
     passReqToCallback: true
   }, function (req, email, password, next) {
     // the authentication flow on our local auth routes
-    console.log('passport local logic test')
     User.findOne({'local.email': email }, function (err, foundUser) {
       // if user is found, dont create new user
       // if user is not found, create new user
@@ -33,18 +32,6 @@ module.exports = function (passport) {
           if (err) throw err
           return next(null, newUser)
         })
-        // var newUser = new User({
-        //   local: {
-        //     name: req.body.user.local.name,
-        //     email: email,
-        //     password: password
-        //   }
-        // })
-        //
-        // newUser.save(function (err, newUser) {
-        //   if (err) throw err
-        //   return next(null, newUser)
-        // })
       }
     })
   }))

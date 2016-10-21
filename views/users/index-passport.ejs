@@ -1,5 +1,13 @@
 <h2>Create new user</h2>
-<form class="new-user-passport" action="/signup-passport" method="post">
+
+<% if(message.length > 0) { %>
+  <h3>Flash Found</h3>
+  <div class="alert alert-danger">
+    <%= message %>
+  </div>
+<% } %>
+
+<form class="new-user-passport" action="/signup" method="post">
   <div class="row">
     <div class="four columns">
       <input type="text" name="user[local][name]" id="user-name" placeholder="Your name" class="u-full-width">

@@ -4,7 +4,20 @@ var passport = require('passport')
 
 var User = require('../models/user')
 
-router.get('/signup', function (req, res) {
+function authCheck (req, res, next) {
+  // if req.isAuthenticated is false, then let it be
+
+  // if it's true, redirect back to profile
+
+  if (req.isAuthenticated()) {
+    req.flash('signupMessage', 'You have logged in, what are you doing bruh?')
+    return res.redirect('/profile')
+  } else {
+    return next()
+  }
+}
+
+router.get('/signup-ajax', function (req, res) {
   User.find({}, function (err, allUsers) {
     console.log(allUsers)
     res.render('users/index', {
@@ -13,18 +26,19 @@ router.get('/signup', function (req, res) {
   })
 })
 
-router.route('/signup-passport')
-      .get(function (req, res) {
+router.route('/signup')
+      .get(authCheck, function (req, res) {
         User.find({}, function (err, allUsers) {
           console.log(allUsers)
           res.render('users/index-passport', {
-            allUsers: allUsers
+            allUsers: allUsers,
+            message: req.flash('signupMessage')
           })
         })
       })
       .post(passport.authenticate('local-signup', {
         successRedirect: '/profile',
-        failureRedirect: '/yow',
+        failureRedirect: '/signup',
         failureFlash: true
       }))
 
@@ -61,7 +75,12 @@ router.get('/error', function (req, res) {
 })
 
 router.get('/profile', function (req, res) {
-  res.render('users/profile')
+  res.render('users/profile', { message: req.flash('signupMessage') })
+})
+
+router.get('/logout', function (req, res) {
+  req.logout()
+  res.redirect('/signup')
 })
 
 module.exports = router
