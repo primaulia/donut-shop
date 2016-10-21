@@ -29,7 +29,6 @@ router.get('/signup-ajax', function (req, res) {
 router.route('/signup')
       .get(authCheck, function (req, res) {
         User.find({}, function (err, allUsers) {
-          console.log(allUsers)
           res.render('users/index-passport', {
             allUsers: allUsers,
             message: req.flash('signupMessage')
@@ -46,41 +45,25 @@ router.route('/login')
       .get(function (req, res) {
         res.render('users/login', { message: req.flash('loginMessage') })
       })
-      .post(function (req, res) {
-        var user = req.body.user
-
-        User.findOne({ 'local.email': user.local.email }, function (err, foundUser) {
-          if (err) res.send(err.message)
-
-          if (foundUser) {
-            foundUser.authenticate(user.local.password, function (err, authenticated) {
-              if (err) res.send(err)
-
-              if (authenticated) {
-                res.redirect('/profile')
-              } else {
-                res.redirect('/login')
-              }
-            })
-          } else {
-            // if application cannot find user by email
-            req.flash('loginMessage', 'Email not found!')
-            res.redirect('/login')
-          }
-        })
-      })
+      .post(passport.authenticate('local-login', {
+        successRedirect: '/profile',
+        failureRedirect: '/login',
+        failureFlash: true
+      }))
 
 router.get('/error', function (req, res) {
   res.render('users/error')
 })
 
 router.get('/profile', function (req, res) {
-  res.render('users/profile', { message: req.flash('signupMessage') })
+  res.send(req.user)
+
+  res.render('users/profile', { message: req.flash('loginMessage') })
 })
 
 router.get('/logout', function (req, res) {
   req.logout()
-  res.redirect('/signup')
+  res.redirect('/login')
 })
 
 module.exports = router
