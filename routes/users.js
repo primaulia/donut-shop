@@ -57,8 +57,7 @@ router.get('/error', function (req, res) {
 
 router.get('/profile', function (req, res) {
   res.send(req.user)
-
-  res.render('users/profile', { message: req.flash('loginMessage') })
+  // res.render('users/profile', { message: req.flash('loginMessage') })
 })
 
 router.get('/logout', function (req, res) {
